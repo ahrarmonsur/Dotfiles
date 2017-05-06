@@ -1,0 +1,42 @@
+# ~/.tmuxinator/eqol_mux.yml
+
+name: eqol_mux
+root: ~/eqol-backend
+
+# Optional tmux socket
+# socket_name: foo
+
+# Runs before everything. Use it to start daemons etc.
+# pre: sudo /etc/rc.d/mysqld start
+
+# Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
+# pre_window: rbenv shell 2.0.0-p247
+
+# Pass command line options to tmux. Useful for specifying a different tmux.conf.
+# tmux_options: -f ~/.tmux.mac.conf
+
+# Change the command to call tmux.  This can be used by derivatives/wrappers like byobu.
+# tmux_command: byobu
+
+# Specifies (by name or index) which window will be selected on project startup. If not set, the first window is used.
+# startup_window: logs
+
+# Controls whether the tmux session should be attached to automatically. Defaults to true.
+# attach: false
+
+# Runs after everything. Use it to attach to tmux with custom options etc.
+# post: tmux -CC attach -t eqol_mux
+
+windows:
+  - editor:
+      #layout: a353,236x50,0,0[236x35,0,0,0,236x14,0,36{119x14,0,36,3,116x14,120,36,4}]
+      layout: a7c1,315x68,0,0[315x43,0,0,0,315x24,0,44{105x24,0,44,2,104x24,106,44,6,104x24,211,44,3}]
+      panes:
+        - vim
+        - python manage.py runserver 0.0.0.0:8000
+        - tail -f /var/log/eqol/celery-worker.log
+        - zsh collectstatic.sh
+  - server:
+      panes:
+          - #blank
+  #- logs: tail -f log/development.log
